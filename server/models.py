@@ -117,6 +117,7 @@ class UserSchema(Schema):
     username = fields.Str(required=True)
     image_url = fields.Str()
     bio = fields.Str()
+    recipes = fields.Nested(lambda: RecipeSchema(many=True, exclude=('user',)))
 
 class RecipeSchema(Schema):
     id = fields.Int(dump_only=True)
@@ -124,3 +125,4 @@ class RecipeSchema(Schema):
     instructions = fields.Str(required=True)
     minutes_to_complete = fields.Int(required=True)
     user_id = fields.Int()
+    user = fields.Nested(lambda: UserSchema(exclude=('recipes',)))
